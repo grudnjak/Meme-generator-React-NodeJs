@@ -13,13 +13,26 @@ import Profile from './components/Profile';
 import Error from './components/Error';
 
 import data from './api/defaultData';
+import api from './api/index'
 
 class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = data;
+    this.state = { ...data, memes: [] };
   }
+
+  componentDidMount() {
+    this.loadMemes();
+  }
+
+  loadMemes = async () => {
+    const memes = await api.getAll();
+    this.setState({ memes });
+
+  }
+
+
   login = (username, password) => {
     this.setState({ user: { username, id: 1 } });
   };
